@@ -12,6 +12,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import { ToolModal } from './ToolModal';
 
 // Aos avaliadores, o desgin foi baseado no design do site da Pluga. (eu tentei)
 
@@ -20,6 +21,7 @@ export const ToolsList = () => {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
+  const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
 
   // carrega as ferramentas retornadas pela api da pluga
   useEffect(() => {
@@ -43,6 +45,7 @@ export const ToolsList = () => {
 
   // função que é chamada quando o card for clicado
   const handleToolClick = (tool: Tool) => {
+    setSelectedTool(tool);
     console.log('O card foi clicado', tool);
   };
 
@@ -116,6 +119,7 @@ export const ToolsList = () => {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
+      <ToolModal tool={selectedTool} isOpen={!!selectedTool} onClose={() => setSelectedTool(null)} />
     </div>
   );
 };
