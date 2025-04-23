@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/pagination';
 import { ToolModal } from './ToolModal';
 import { useRecentTools } from '@/hooks/useRecentTools';
+import { LoadingSpinner } from './LoadingSpinner';
 
 // Aos avaliadores, o desgin foi baseado no design do site da Pluga. (eu tentei)
 export const ToolsList = () => {
@@ -22,14 +23,17 @@ export const ToolsList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { recentTools, addToolToRecent } = useRecentTools();
 
   // carrega as ferramentas retornadas pela api da pluga
   useEffect(() => {
     const loadTools = async () => {
+      setIsLoading(true);
       const data = await fetchTools();
       setTools(data);
+      setIsLoading(false);
     };
     loadTools();
   }, []);
@@ -49,7 +53,6 @@ export const ToolsList = () => {
   const handleToolClick = (tool: Tool) => {
     setSelectedTool(tool);
     addToolToRecent(tool);
-    console.log('O card foi clicado', tool);
   };
 
   // vai calcular quantas páginas precisamos baseado no total de itens filtrados
@@ -71,11 +74,15 @@ export const ToolsList = () => {
         </div>
       </div>
       {/* grid de cards das ferramentas */}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16'>
-        {paginatedTools.map((tool) => (
-          <ToolCard key={tool.app_id} tool={tool} onClick={handleToolClick} />
-        ))}
-      </div>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16'>
+          {paginatedTools.map((tool) => (
+            <ToolCard key={tool.app_id} tool={tool} onClick={handleToolClick} />
+          ))}
+        </div>
+      )}
       {/* barra de paginação do shadcn */}
       <Pagination className='justify-center mt-8'>
         <PaginationContent className='text-muted-foreground'>
@@ -122,7 +129,12 @@ export const ToolsList = () => {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-      <ToolModal tool={selectedTool} isOpen={!!selectedTool} onClose={() => setSelectedTool(null)} recentTools={recentTools} />
+      <ToolModal
+        tool={selectedTool}
+        isOpen={!!selectedTool}
+        onClose={() => setSelectedTool(null)}
+        recentTools={recentTools}
+      />
     </div>
   );
 };
