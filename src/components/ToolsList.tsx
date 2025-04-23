@@ -14,8 +14,8 @@ import {
 } from '@/components/ui/pagination';
 import { ToolModal } from './ToolModal';
 import { useRecentTools } from '@/hooks/useRecentTools';
-// Aos avaliadores, o desgin foi baseado no design do site da Pluga. (eu tentei)
 
+// Aos avaliadores, o desgin foi baseado no design do site da Pluga. (eu tentei)
 export const ToolsList = () => {
   const [tools, setTools] = useState<Tool[]>([]);
   const [search, setSearch] = useState('');
@@ -60,7 +60,7 @@ export const ToolsList = () => {
       {/* input de busca */}
       <div className='mb-8 relative max-w-md mx-auto'>
         <div className='relative'>
-          <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500' />
+          <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground' />
           <Input
             type='text'
             placeholder='Buscar +100 ferramentas'
@@ -78,7 +78,7 @@ export const ToolsList = () => {
       </div>
       {/* barra de paginação do shadcn */}
       <Pagination className='justify-center mt-8'>
-        <PaginationContent className='text-gray-500'>
+        <PaginationContent className='text-muted-foreground'>
           {/* botão de página anterior */}
           <PaginationItem>
             <PaginationPrevious
@@ -86,7 +86,7 @@ export const ToolsList = () => {
               onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
               className={`${
                 currentPage === 1 ? 'pointer-events-none opacity-50' : ''
-              } hover:bg-gray-100`}
+              } hover:bg-muted`}
             />
           </PaginationItem>
           {/* números das páginas */}
@@ -99,7 +99,7 @@ export const ToolsList = () => {
                 className={
                   currentPage === page
                     ? 'bg-blue-500 text-white hover:bg-blue-600'
-                    : 'hover:bg-gray-100'
+                    : 'hover:bg-muted'
                 }
               >
                 {page}
@@ -117,7 +117,7 @@ export const ToolsList = () => {
                 currentPage === totalPages
                   ? 'pointer-events-none opacity-50'
                   : ''
-              } hover:bg-gray-100`}
+              } hover:bg-muted`}
             />
           </PaginationItem>
         </PaginationContent>

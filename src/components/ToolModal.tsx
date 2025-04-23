@@ -19,7 +19,7 @@ export const ToolModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className='max-w-md p-0 gap-0 rounded-lg overflow-hidden bg-white border-none'>
+      <DialogContent className='max-w-md p-0 gap-0 rounded-lg overflow-hidden bg-background border-none'>
         <div
           className='p-6 flex items-center justify-between'
           style={{ backgroundColor: tool.color }}
@@ -44,12 +44,10 @@ export const ToolModal = ({
             Acessar ferramenta <ExternalLink size={16} />
           </button>
 
-          
-
           {recentTools.length > 0 && (
             <div className='mt-4'>
               <hr className='border-gray-200' />
-              <h3 className='text-base font-medium text-gray-900 mb-6 mt-4'>
+              <h3 className='text-base font-medium text-muted-foreground mb-6 mt-4'>
                 Últimas ferramentas visualizadas
               </h3>
               <div className='grid grid-cols-3 gap-4'>
@@ -68,7 +66,7 @@ export const ToolModal = ({
                         className='w-6 h-6'
                       />
                     </div>
-                    <span className='text-sm text-gray-600 text-center truncate w-full'>
+                    <span className='text-sm text-foreground text-center truncate w-full'>
                       {recentTool.name}
                     </span>
                   </div>
