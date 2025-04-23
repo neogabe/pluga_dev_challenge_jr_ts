@@ -1,5 +1,10 @@
 import { Tool } from '@/types/tools';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
 import { ExternalLink } from 'lucide-react';
 
 interface ToolModalProps {
@@ -30,9 +35,13 @@ export const ToolModal = ({
               alt={`${tool.name} icon`}
               className='w-10 h-10'
             />
-            <span className='text-2xl font-semibold text-white'>
-              {tool.name}
-            </span>
+            <DialogTitle>
+              <DialogDescription>
+                <span className='text-2xl font-semibold text-white'>
+                  {tool.name}
+                </span>
+              </DialogDescription>
+            </DialogTitle>
           </div>
         </div>
 
