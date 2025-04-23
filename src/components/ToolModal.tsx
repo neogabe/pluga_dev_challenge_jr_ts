@@ -6,9 +6,15 @@ interface ToolModalProps {
   tool: Tool | null;
   isOpen: boolean;
   onClose: () => void;
+  recentTools: Tool[];
 }
 
-export const ToolModal = ({ tool, isOpen, onClose }: ToolModalProps) => {
+export const ToolModal = ({
+  tool,
+  isOpen,
+  onClose,
+  recentTools,
+}: ToolModalProps) => {
   if (!tool) return null;
 
   return (
@@ -38,16 +44,38 @@ export const ToolModal = ({ tool, isOpen, onClose }: ToolModalProps) => {
             Acessar ferramenta <ExternalLink size={16} />
           </button>
 
-          <hr className='border-gray-200' />
+          
 
-          <div className=''>
-            <h3 className='text-base font-medium text-gray-900 mb-4'>
-              Últimas ferramentas visualizadas
-            </h3>
-            <div className='flex gap-4'>
-              {/* aqui vai o histórico */}
+          {recentTools.length > 0 && (
+            <div className='mt-4'>
+              <hr className='border-gray-200' />
+              <h3 className='text-base font-medium text-gray-900 mb-6 mt-4'>
+                Últimas ferramentas visualizadas
+              </h3>
+              <div className='grid grid-cols-3 gap-4'>
+                {recentTools.map((recentTool) => (
+                  <div
+                    key={recentTool.app_id}
+                    className='flex flex-col items-center'
+                  >
+                    <div
+                      className='w-12 h-12 flex items-center justify-center rounded-lg mb-2'
+                      style={{ backgroundColor: recentTool.color }}
+                    >
+                      <img
+                        src={recentTool.icon}
+                        alt={`Ícone do ${recentTool.name}`}
+                        className='w-6 h-6'
+                      />
+                    </div>
+                    <span className='text-sm text-gray-600 text-center truncate w-full'>
+                      {recentTool.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

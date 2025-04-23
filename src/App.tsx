@@ -1,7 +1,6 @@
 import { ToolsList } from '@/components/ToolsList';
 
 // Aos avaliadores, o desgin foi baseado no design do site da Pluga. (eu tentei)
-
 const App = () => {
   return (
     <main className='min-h-screen bg-gray-50'>
