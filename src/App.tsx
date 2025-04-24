@@ -1,6 +1,6 @@
 import { ToolsList } from '@/components/ToolsList';
-import { ThemeProvider } from '@/components/theme-provider';
-import { ModeToggle } from '@/components/mode-toggle';
+import { ThemeProvider } from '@/components/ui/theme-provider';
+import { ModeToggle } from '@/components/ui/mode-toggle';
 
 // Aos avaliadores, o desgin foi baseado no design do site da Pluga. (eu tentei)
 const App = () => {

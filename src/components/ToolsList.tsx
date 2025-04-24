@@ -39,19 +39,30 @@ export const ToolsList = () => {
 
       {isLoading ? (
         <LoadingSpinner />
-      ) : (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16'>
-          {paginatedTools.map((tool) => (
-            <ToolCard key={tool.app_id} tool={tool} onClick={handleToolClick} />
-          ))}
+      ) : filteredTools.length === 0 ? (
+        <div className='text-center text-gray-500 py-8'>
+          Ops! Parece que a ferramenta que você está procurando não está
+          disponível no momento. 😥
         </div>
-      )}
+      ) : (
+        <>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16'>
+            {paginatedTools.map((tool) => (
+              <ToolCard
+                key={tool.app_id}
+                tool={tool}
+                onClick={handleToolClick}
+              />
+            ))}
+          </div>
 
-      <ToolsPagination
-        tools={filteredTools}
-        itemsPerPage={12}
-        onPaginatedToolsChange={setPaginatedTools}
-      />
+          <ToolsPagination
+            tools={filteredTools}
+            itemsPerPage={12}
+            onPaginatedToolsChange={setPaginatedTools}
+          />
+        </>
+      )}
 
       <ToolModal
         tool={selectedTool}
