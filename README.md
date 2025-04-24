@@ -48,7 +48,7 @@ Você pode acessar o projeto publicado na Vercel pelo link abaixo:
 1. Clone o repositório:
 
 ```bash
-git clone [URL_DO_REPOSITÓRIO]
+git clone https://github.com/neogabe/pluga_dev_challenge_jr_ts.git
 ```
 
 2. Instale as dependências:
