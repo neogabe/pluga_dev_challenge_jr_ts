@@ -26,7 +26,7 @@ Mantenha as coisas simples, boa sorte! ;)
 
 Você pode acessar o projeto publicado na Vercel pelo link abaixo:
 
-- https://pluga-dev-challenge-jr.vercel.app/
+- https://pluga-dev-challenge-jr-ts.vercel.app
 
 ## Tecnologias Utilizadas
 
