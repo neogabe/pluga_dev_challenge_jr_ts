@@ -2,25 +2,9 @@ import { SearchBar } from '@/components/SearchBar';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe } from 'node:test';
 import { expect, it, vi } from 'vitest';
+import { mockTools, mockSearchTools } from './mocks/tools';
 
 describe('SearchBar', () => {
-  const mockTools = [
-    {
-      app_id: 'omie',
-      name: 'Omie',
-      color: '#001E27',
-      icon: 'https://assets.pluga.co/apps/icons/omie/omie-icon.svg',
-      link: 'https://pluga.co/ferramentas/omie/',
-    },
-    {
-      app_id: 'hotmart',
-      name: 'Hotmart',
-      color: '#F04E23',
-      icon: 'https://assets.pluga.co/apps/icons/hotmart/hotmart-icon.svg',
-      link: 'https://pluga.co/ferramentas/hotmart/',
-    },
-  ];
-
   it('deve renderizar o input de busca', () => {
     const onFilteredToolsChange = vi.fn();
     render(
@@ -34,19 +18,57 @@ describe('SearchBar', () => {
       screen.getByPlaceholderText('Buscar +100 ferramentas')
     ).toBeInTheDocument();
   });
-  
-  it('deve filtrar as ferramentas quando usuário digitar no input', () => {
+
+  it('deve filtrar ferramentas "Google" quando o usuário digitar "google"', () => {
     const onFilteredToolsChange = vi.fn();
     render(
       <SearchBar
-        tools={mockTools}
+        tools={mockSearchTools}
         onFilteredToolsChange={onFilteredToolsChange}
       />
     );
 
-    const input = screen.getByPlaceholderText('Buscar +100 ferramentas');
-    fireEvent.change(input, { target: { value: 'Omie' } });
+    const searchInput = screen.getByPlaceholderText('Buscar +100 ferramentas');
+    fireEvent.change(searchInput, { target: { value: 'google' } });
 
-    expect(onFilteredToolsChange).toHaveBeenCalledWith([mockTools[0]]);
+    const expectedTools = mockSearchTools.filter((tool) =>
+      tool.name.toLowerCase().includes('google')
+    );
+
+    expect(onFilteredToolsChange).toHaveBeenCalledWith(expectedTools);
+  });
+
+  it('deve ser case insensitive na busca', () => {
+    const onFilteredToolsChange = vi.fn();
+    render(<SearchBar tools={mockSearchTools} onFilteredToolsChange={onFilteredToolsChange} />);
+    
+    const searchInput = screen.getByPlaceholderText('Buscar +100 ferramentas');
+    fireEvent.change(searchInput, { target: { value: 'GOOGLE' } });
+    
+    const expectedTools = mockSearchTools.filter((tool) =>
+      tool.name.toLowerCase().includes('google')
+    );
+
+    expect(onFilteredToolsChange).toHaveBeenCalledWith(expectedTools);
+  });
+
+  it('deve retornar array vazio quando nenhuma ferramenta corresponder à busca', () => {
+    const onFilteredToolsChange = vi.fn();
+    render(<SearchBar tools={mockSearchTools} onFilteredToolsChange={onFilteredToolsChange} />);
+    
+    const searchInput = screen.getByPlaceholderText('Buscar +100 ferramentas');
+    fireEvent.change(searchInput, { target: { value: 'ferramenta inexistente' } });
+    
+    expect(onFilteredToolsChange).toHaveBeenCalledWith([]);
+  });
+
+  it('deve retornar todas as ferramentas quando o input estiver vazio', () => {
+    const onFilteredToolsChange = vi.fn();
+    render(<SearchBar tools={mockSearchTools} onFilteredToolsChange={onFilteredToolsChange} />);
+    
+    const searchInput = screen.getByPlaceholderText('Buscar +100 ferramentas');
+    fireEvent.change(searchInput, { target: { value: '' } });
+    
+    expect(onFilteredToolsChange).toHaveBeenCalledWith(mockSearchTools);
   });
 });

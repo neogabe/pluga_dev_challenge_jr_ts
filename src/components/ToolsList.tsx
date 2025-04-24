@@ -40,7 +40,7 @@ export const ToolsList = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : filteredTools.length === 0 ? (
-        <div className='text-center text-gray-500 py-8'>
+        <div className='text-center text-muted-foreground py-8'>
           Ops! Parece que a ferramenta que você está procurando não está
           disponível no momento. 😥
         </div>
