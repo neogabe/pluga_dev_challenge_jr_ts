@@ -40,11 +40,16 @@ describe('SearchBar', () => {
 
   it('deve ser case insensitive na busca', () => {
     const onFilteredToolsChange = vi.fn();
-    render(<SearchBar tools={mockSearchTools} onFilteredToolsChange={onFilteredToolsChange} />);
-    
+    render(
+      <SearchBar
+        tools={mockSearchTools}
+        onFilteredToolsChange={onFilteredToolsChange}
+      />
+    );
+
     const searchInput = screen.getByPlaceholderText('Buscar +100 ferramentas');
     fireEvent.change(searchInput, { target: { value: 'GOOGLE' } });
-    
+
     const expectedTools = mockSearchTools.filter((tool) =>
       tool.name.toLowerCase().includes('google')
     );
@@ -54,21 +59,33 @@ describe('SearchBar', () => {
 
   it('deve retornar array vazio quando nenhuma ferramenta corresponder à busca', () => {
     const onFilteredToolsChange = vi.fn();
-    render(<SearchBar tools={mockSearchTools} onFilteredToolsChange={onFilteredToolsChange} />);
-    
+    render(
+      <SearchBar
+        tools={mockSearchTools}
+        onFilteredToolsChange={onFilteredToolsChange}
+      />
+    );
+
     const searchInput = screen.getByPlaceholderText('Buscar +100 ferramentas');
-    fireEvent.change(searchInput, { target: { value: 'ferramenta inexistente' } });
-    
+    fireEvent.change(searchInput, {
+      target: { value: 'ferramenta inexistente' },
+    });
+
     expect(onFilteredToolsChange).toHaveBeenCalledWith([]);
   });
 
   it('deve retornar todas as ferramentas quando o input estiver vazio', () => {
     const onFilteredToolsChange = vi.fn();
-    render(<SearchBar tools={mockSearchTools} onFilteredToolsChange={onFilteredToolsChange} />);
-    
+    render(
+      <SearchBar
+        tools={mockSearchTools}
+        onFilteredToolsChange={onFilteredToolsChange}
+      />
+    );
+
     const searchInput = screen.getByPlaceholderText('Buscar +100 ferramentas');
     fireEvent.change(searchInput, { target: { value: '' } });
-    
+
     expect(onFilteredToolsChange).toHaveBeenCalledWith(mockSearchTools);
   });
 });
